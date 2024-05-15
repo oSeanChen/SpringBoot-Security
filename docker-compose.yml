@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - security-network
+  mysql:
+    image: mysql:5.7
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: test
+    ports:
+      - "3305:3306"
+    networks:
+      - security-network
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+# Network
+networks:
+  security-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
